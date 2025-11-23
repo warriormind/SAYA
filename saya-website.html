@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAYA - Sustainable Agriculture Youth Alliance</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar.hidden {
+            transform: translateY(-100%);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .nav-logo-icon {
+            width: 36px;
+            height: 36px;
+            color: #16a34a;
+        }
+
+        .nav-logo-text {
+            color: #15803d;
+            letter-spacing: 0.2em;
+            font-weight: 700;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: #374151;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #16a34a;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #16a34a;
+            border-radius: 2px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .mobile-menu-btn svg {
+            width: 28px;
+            height: 28px;
+            color: #16a34a;
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+            min-height: 100vh;
+            padding-top: 70px;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #d1fae5 0%, #dcfce7 50%, #ccfbf1 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.1;
+            background-image: radial-gradient(circle at 2px 2px, rgb(34, 197, 94) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+
+        .hero {
+            position: relative;
+            z-index: 10;
+            min-height: calc(100vh - 70px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 24px;
+        }
+
+        .content {
+            max-width: 1280px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 32px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .logo-wrapper {
+            position: relative;
+        }
+
+        .logo-glow {
+            position: absolute;
+            inset: 0;
+            background-color: #22c55e;
+            opacity: 0.2;
+            filter: blur(48px);
+            border-radius: 50%;
+        }
+
+        .logo-circle {
+            position: relative;
+            background-color: white;
+            padding: 24px;
+            border-radius: 50%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-icon {
+            width: 64px;
+            height: 64px;
+            color: #16a34a;
+        }
+
+        .main-title {
+            color: #059669;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .divider-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 8px;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .divider-line {
+            height: 1px;
+            width: 48px;
+            background-color: #22c55e;
+        }
+
+        .acronym {
+            color: #15803d;
+            letter-spacing: 0.3em;
+            font-weight: 700;
+        }
+
+        .motto {
+            color: #15803d;
+            font-style: italic;
+            font-weight: 600;
+            margin-bottom: 24px;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .tagline {
+            color: #374151;
+            max-width: 768px;
+            margin: 0 auto 48px;
+            animation: fadeInUp 1s ease 0.8s both;
+        }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 64px;
+            animation: fadeInUp 1s ease 1s both;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: 9999px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: #16a34a;
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary:hover {
+            background-color: #15803d;
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: #15803d;
+            border: 2px solid #16a34a;
+        }
+
+        .btn-outline:hover {
+            background-color: #f0fdf4;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            max-width: 1024px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease 1.2s both;
+        }
+
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #dcfce7;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon-wrapper {
+            background-color: #dcfce7;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .feature-icon {
+            width: 28px;
+            height: 28px;
+            color: #16a34a;
+        }
+
+        .feature-card h3 {
+            color: #166534;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: #4b5563;
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: linear-gradient(to bottom, #ffffff 0%, #f0fdf4 100%);
+            padding: 80px 24px;
+        }
+
+        .section-container {
+            max-width: 1024px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-header h1 {
+            color: #15803d;
+            margin-bottom: 16px;
+        }
+
+        .section-header .subtitle {
+            color: #059669;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .section-header p {
+            color: #4b5563;
+            max-width: 768px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .card h2 {
+            color: #166534;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card h3 {
+            color: #15803d;
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+
+        .card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .card ul li {
+            padding: 8px 0 8px 32px;
+            position: relative;
+            color: #4b5563;
+        }
+
+        .card ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #16a34a;
+            font-weight: 700;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .value-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+            padding: 24px;
+            border-radius: 12px;
+            border: 2px solid #dcfce7;
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            border-color: #16a34a;
+            transform: translateX(8px);
+        }
+
+        .value-card h4 {
+            color: #15803d;
+            margin-bottom: 8px;
+        }
+
+        .value-card p {
+            color: #4b5563;
+        }
+
+        .stakeholder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .stakeholder-card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            border-left: 4px solid #16a34a;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .stakeholder-card:hover {
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .stakeholder-card h3 {
+            color: #15803d;
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+
+        .benefits-list {
+            background: #f0fdf4;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+
+        .benefits-list h4 {
+            color: #166534;
+            margin-bottom: 8px;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .tech-card {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #16a34a;
+        }
+
+        .tech-card h4 {
+            color: #15803d;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            color: #16a34a;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #064e3b 0%, #15803d 100%);
+            color: white;
+            padding: 48px 24px 24px;
+            text-align: center;
+        }
+
+        footer p {
+            margin-bottom: 8px;
+        }
+
+        footer a {
+            color: #86efac;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #bbf7d0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 24px;
+                gap: 16px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                display: none;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-logo-text {
+                font-size: 0.9rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .section-container {
+                padding: 0 16px;
+            }
+        }
+
+        .decorative {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(64px);
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        .dec-1 {
+            top: 10%;
+            left: 5%;
+            width: 200px;
+            height: 200px;
+            background: #4ade80;
+        }
+
+        .dec-2 {
+            bottom: 10%;
+            right: 5%;
+            width: 250px;
+            height: 250px;
+            background: #34d399;
+        }
+
+        .dec-3 {
+            top: 50%;
+            right: 10%;
+            width: 150px;
+            height: 150px;
+            background: #2dd4bf;
+        }
+
+        /* Achievement Styles */
+        .achievement-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #16a34a;
+            transition: all 0.3s ease;
+        }
+
+        .achievement-card:hover {
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+            transform: translateX(8px);
+        }
+
+        .achievement-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .achievement-number {
+            background: linear-gradient(135deg, #16a34a 0%, #059669 100%);
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .achievement-card h3 {
+            color: #15803d;
+            margin: 0;
+        }
+
+        .partner-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            color: #15803d;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 12px;
+            border: 1px solid #16a34a;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #16a34a;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(22, 163, 74, 0.2);
+        }
+
+        .stat-number {
+            color: #15803d;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: #166534;
+            font-weight: 500;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin-top: 32px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #16a34a 0%, #059669 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 32px;
+            padding-left: 24px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -32px;
+            top: 8px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #16a34a;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #16a34a;
+        }
+
+        .timeline-date {
+            color: #059669;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .impact-card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-top: 3px solid #16a34a;
+            transition: all 0.3s ease;
+        }
+
+        .impact-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .impact-icon {
+            width: 40px;
+            height: 40px;
+            background: #dcfce7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .impact-icon svg {
+            width: 24px;
+            height: 24px;
+            color: #16a34a;
+        }
+
+        .impact-card h4 {
+            color: #15803d;
+            margin-bottom: 8px;
+        }
+
+        .hapitech-collab {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            padding: 48px;
+            border-radius: 20px;
+            margin-top: 48px;
+            border: 2px solid #16a34a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hapitech-collab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(22, 163, 74, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hapitech-collab h2 {
+            color: #15803d;
+            text-align: center;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .hapitech-collab p {
+            text-align: center;
+            color: #166534;
+            max-width: 800px;
+            margin: 0 auto 32px;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo" onclick="navigateTo('home')">
+                <svg class="nav-logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 20h10"/>
+                    <path d="M10 20c5.5-2.5.8-6.4 3-10"/>
+                    <path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/>
+                    <path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/>
+                </svg>
+                <span class="nav-logo-text">SAYA</span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a class="nav-link active" data-section="home">Home</a></li>
+                <li><a class="nav-link" data-section="about">About</a></li>
+                <li><a class="nav-link" data-section="membership">Membership</a></li>
+                <li><a class="nav-link" data-section="governance">Governance</a></li>
+                <li><a class="nav-link" data-section="stakeholders">Stakeholders</a></li>
+                <li><a class="nav-link" data-section="technology">Technology</a></li>
+                <li><a class="nav-link" data-section="achievements">Achievements</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="section active hero-section">
+        <div class="pattern"></div>
+        <div class="hero">
+            <div class="content">
+                <div class="logo-container">
+                    <div class="logo-wrapper">
+                        <div class="logo-glow"></div>
+                        <div class="logo-circle">
+                            <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 20h10"/>
+                                <path d="M10 20c5.5-2.5.8-6.4 3-10"/>
+                                <path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/>
+                                <path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h1 class="main-title">Sustainable Agriculture Youth Alliance</h1>
+                    <div class="divider-container">
+                        <div class="divider-line"></div>
+                        <span class="acronym">SAYA</span>
+                        <div class="divider-line"></div>
+                    </div>
+                </div>
+
+                <p class="motto">"Growing Leaders. Growing Food. Growing the Future."</p>
+
+                <p class="tagline">
+                    Empowering the next generation of agricultural leaders to cultivate sustainable solutions 
+                    for a thriving planet and prosperous communities
+                </p>
+
+                <div class="buttons">
+                    <button class="btn btn-primary" onclick="navigateTo('membership')">
+                        Join Us
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14"/>
+                            <path d="m12 5 7 7-7 7"/>
+                        </svg>
+                    </button>
+                    <button class="btn btn-outline" onclick="navigateTo('about')">Learn More</button>
+                </div>
+
+                <div class="features">
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </div>
+                        <h3>Youth-Led</h3>
+                        <p>Driven by passionate young leaders committed to transforming agriculture</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 20h10"/>
+                                <path d="M10 20c5.5-2.5.8-6.4 3-10"/>
+                                <path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/>
+                                <path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/>
+                            </svg>
+                        </div>
+                        <h3>Sustainable</h3>
+                        <p>Promoting eco-friendly practices that protect our environment for future generations</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+                                <path d="M2 12h20"/>
+                            </svg>
+                        </div>
+                        <h3>Global Impact</h3>
+                        <p>Building networks across Zambia and beyond for sustainable food systems</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="decorative dec-1"></div>
+        <div class="decorative dec-2"></div>
+        <div class="decorative dec-3"></div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section content-section">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="subtitle">Who We Are</div>
+                <h1>About SAYA</h1>
+                <p>A youth-driven movement transforming agriculture in Zambia and beyond</p>
+            </div>
+
+            <div class="card">
+                <h2>
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/>
+                        <path d="M9 18h6"/>
+                        <path d="M10 22h4"/>
+                    </svg>
+                    Our Vision
+                </h2>
+                <p>To create a generation of empowered young agricultural leaders driving sustainable development, food security, and technological innovation across Zambia and beyond.</p>
+            </div>
+
+            <div class="card">
+                <h2>
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5"/>
+                        <path d="M2 12l10 5 10-5"/>
+                    </svg>
+                    Our Mission
+                </h2>
+                <p>To empower youth and farming communities through knowledge, sustainable agriculture, technology adoption, market access, entrepreneurship, and inclusive collaboration across all agricultural value chains.</p>
+            </div>
+
+            <div class="card">
+                <h2>
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    Core Values
+                </h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <h4>Sustainability</h4>
+                        <p>Promoting environmental stewardship and long-term agricultural viability</p>
+                    </div>
+                    <div class="value-card">
+                        <h4>Innovation</h4>
+                        <p>Embracing modern practices and technology-driven solutions</p>
+                    </div>
+                    <div class="value-card">
+                        <h4>Integrity</h4>
+                        <p>Ensuring transparency and accountability in all operations</p>
+                    </div>
+                    <div class="value-card">
+                        <h4>Collaboration</h4>
+                        <p>Working with farmers, government, private sector, and institutions</p>
+                    </div>
+                    <div class="value-card">
+                        <h4>Youth Empowerment</h4>
+                        <p>Building skills, leadership, and opportunities for young people</p>
+                    </div>
+                    <div class="value-card">
+                        <h4>Food Safety</h4>
+                        <p>Promoting safe, toxin-free, high-quality agricultural products</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4"/>
+                        <path d="M12 8h.01"/>
+                    </svg>
+                    Why SAYA?
+                </h2>
+                <p>Sustainable agriculture is essential in addressing global and local challenges such as climate change, food insecurity, unemployment, and poverty. Young people represent the energy, creativity, and innovation needed to transform the agricultural landscape.</p>
+                <h3>SAYA exists to:</h3>
+                <ul>
+                    <li>Equip farmers with knowledge and modern skills</li>
+                    <li>Create strong and reliable market networks</li>
+                    <li>Build confidence in local farming communities</li>
+                    <li>Advocate for policy reforms and youth inclusion</li>
+                    <li>Introduce technology to accelerate agricultural growth</li>
+                </ul>
+                <p style="margin-top: 24px; font-style: italic; color: #059669;">SAYA is a movement, a platform, and a collective voice working toward a sustainable, innovative, and food-secure Zambia.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Section -->
+    <section id="membership" class="section content-section">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="subtitle">Join The Movement</div>
+                <h1>Membership</h1>
+                <p>Be part of the agricultural transformation in Zambia</p>
+            </div>
+
+            <div class="card">
+                <h2>
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    Who Can Join?
+                </h2>
+                <p>Membership is open to individuals, organizations, students, cooperatives, and institutions aligned with agriculture, aquaculture, livestock, agritech, or sustainable development.</p>
+            </div>
+
+            <div class="card">
+                <h2>Membership Categories</h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <h4>Individual Members</h4>
+                        <p>Farmers, agricultural professionals, and enthusiasts</p>
+                    </div>
+                    <div class="value-card">
+                        <h4>Student Members</h4>
+                        <p>Students pursuing agricultural or related studies</p>
+                    </div>
+                    <div class="value-card">
+                        <h4>Organizational Members</h4>
+                        <p>NGOs, businesses, and agricultural organizations</p>
+                    </div>
+                    <div class="value-card">
+                        <h4>Cooperative Members</h4>
+                        <p>Farmer cooperatives and producer groups</p>
+                    </div>
+                    <div class="value-card">
+                        <h4>Honorary Members</h4>
+                        <p>Distinguished contributors to sustainable agriculture</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Member Benefits
+                </h2>
+                <ul>
+                    <li>Access to training, workshops, and seminars on modern farming techniques</li>
+                    <li>Agricultural technology tools and demonstrations</li>
+                    <li>Market linkage support to connect with buyers and suppliers</li>
+                    <li>Business development and mentorship programs</li>
+                    <li>Networking opportunities with major industry players</li>
+                    <li>Access to funding partners and financial institutions</li>
+                    <li>Voice in policy advocacy and agricultural reforms</li>
+                    <li>Collective bargaining power for better market prices</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Governance Section -->
+    <section id="governance" class="section content-section">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="subtitle">Our Structure</div>
+                <h1>Governance</h1>
+                <p>Transparent leadership and democratic decision-making</p>
+            </div>
+
+            <div class="card">
+                <h2>Governance Structures</h2>
+                <h3>General Assembly</h3>
+                <p>The highest decision-making body, held annually with all members.</p>
+                
+                <h3>Executive Committee</h3>
+                <p>Responsible for strategic leadership and day-to-day operations.</p>
+                
+                <h3>Sub-Committees</h3>
+                <p>Specialized committees for Technology, Finance, Membership, Aquaculture, Livestock, Markets, and more.</p>
+            </div>
+
+            <div class="card">
+                <h2>Leadership Roles</h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <h4>Chairperson</h4>
+                        <p>Leads SAYA, oversees operations, and represents the movement nationally and internationally</p>
+                    </div>
+                    <div class="value-card">
+                        <h4>Vice-Chairperson</h4>
+                        <p>Assists the Chairperson and assumes duties in their absence</p>
+                    </div>
+                    <div class="value-card">
+                        <h4>Secretary</h4>
+                        <p>Maintains documentation, communication, meeting minutes, and official records</p>
+                    </div>
+                    <div class="value-card">
+                        <h4>Treasurer</h4>
+                        <p>Manages finances, reporting, budgeting, and financial transparency</p>
+                    </div>
+                    <div class="value-card">
+                        <h4>Sub-Committee Heads</h4>
+                        <p>Lead specific departments and initiatives</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Elections & Terms</h2>
+                <ul>
+                    <li>Leadership elections held every two years</li>
+                    <li>Executive members serve a two-year renewable term, maximum two terms</li>
+                    <li>All decisions made by majority vote or consensus</li>
+                    <li>General Assembly meets annually</li>
+                    <li>Executive Committee meets quarterly or as needed</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>Financial Management</h2>
+                <h3>Revenue Sources:</h3>
+                <ul>
+                    <li>Membership fees</li>
+                    <li>Donations and grants</li>
+                    <li>Strategic partnerships</li>
+                    <li>Income-generating activities (seedlings, trainings, produce sales)</li>
+                </ul>
+                <p style="margin-top: 16px;">The Treasurer ensures transparent financial management with full Executive Committee oversight and regular reporting to the General Assembly.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stakeholders Section -->
+    <section id="stakeholders" class="section content-section">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="subtitle">Our Partners</div>
+                <h1>Key Stakeholders</h1>
+                <p>Building a collaborative ecosystem for agricultural transformation</p>
+            </div>
+
+            <div class="stakeholder-grid">
+                <div class="stakeholder-card">
+                    <h3>Supermarkets, Hotels & Restaurants</h3>
+                    <p>SAYA bridges the gap by offering trained farmers, consistent production, and food safety assurance.</p>
+                    <div class="benefits-list">
+                        <h4>Benefits:</h4>
+                        <ul>
+                            <li>Reliable sourcing</li>
+                            <li>Strong local supplier relationships</li>
+                            <li>Improved brand image through sustainability</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="stakeholder-card">
+                    <h3>Agro-Stores</h3>
+                    <p>SAYA ensures informed, safe, and effective input use by educating farmers.</p>
+                    <div class="benefits-list">
+                        <h4>Benefits:</h4>
+                        <ul>
+                            <li>Increased customer trust</li>
+                            <li>Promotion of safe farming techniques</li>
+                            <li>Market expansion</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="stakeholder-card">
+                    <h3>Feed Suppliers</h3>
+                    <p>We encourage balanced feed practices and discourage harmful shortcuts.</p>
+                    <div class="benefits-list">
+                        <h4>Benefits:</h4>
+                        <ul>
+                            <li>Farmer education</li>
+                            <li>Market visibility</li>
+                            <li>Healthier livestock outcomes</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="stakeholder-card">
+                    <h3>Farmers</h3>
+                    <p>SAYA strengthens farmers through training, market linkages, and collective action.</p>
+                    <div class="benefits-list">
+                        <h4>Benefits:</h4>
+                        <ul>
+                            <li>Higher income</li>
+                            <li>Reduced market exploitation</li>
+                            <li>Skills improvement</li>
+                            <li>Reliable markets</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="stakeholder-card">
+                    <h3>Financial Institutions</h3>
+                    <p>Access to educated, lower-risk borrowers with improved agricultural practices.</p>
+                    <div class="benefits-list">
+                        <h4>Benefits:</h4>
+                        <ul>
+                            <li>Reduced loan default risk</li>
+                            <li>Market expansion</li>
+                            <li>Strong community trust</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="stakeholder-card">
+                    <h3>Government</h3>
+                    <p>Collaboration provides accurate insights into farmer needs and promotes sustainability.</p>
+                    <div class="benefits-list">
+                        <h4>Benefits:</h4>
+                        <ul>
+                            <li>Improved policy formulation</li>
+                            <li>Food safety and security</li>
+                            <li>Youth empowerment</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="stakeholder-card">
+                    <h3>Local Government</h3>
+                    <p>Support with markets, training centers, land access, and extension services.</p>
+                    <div class="benefits-list">
+                        <h4>Benefits:</h4>
+                        <ul>
+                            <li>Reduced corruption through transparency</li>
+                            <li>Improved farmer-authority relations</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="stakeholder-card">
+                    <h3>Churches & Mining Companies</h3>
+                    <p>Community mobilization, moral guidance, and local development support.</p>
+                    <div class="benefits-list">
+                        <h4>Benefits:</h4>
+                        <ul>
+                            <li>Community engagement</li>
+                            <li>Food supply support</li>
+                            <li>Youth guidance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section id="technology" class="section content-section">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="subtitle">Innovation Driven</div>
+                <h1>Technology & Digital Innovation</h1>
+                <p>Modernizing agriculture through technology adoption and digital solutions</p>
+            </div>
+
+            <div class="card">
+                <h2>
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                    </svg>
+                    Digital Tools & Platforms
+                </h2>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                                <line x1="12" y1="18" x2="12.01" y2="18"/>
+                            </svg>
+                            Mobile Apps
+                        </h4>
+                        <p>Weather forecasts, pest alerts, and market prices at your fingertips</p>
+                    </div>
+                    <div class="tech-card">
+                        <h4>
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="2" y1="12" x2="22" y2="12"/>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            </svg>
+                            E-commerce
+                        </h4>
+                        <p>Online platforms for selling produce directly to buyers</p>
+                    </div>
+                    <div class="tech-card">
+                        <h4>
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10 9 9 9 8 9"/>
+                            </svg>
+                            Digital Records
+                        </h4>
+                        <p>Track farm activities, expenses, and production data digitally</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a10 10 0 1 0 10 10H12V2z"/>
+                        <path d="M12 12V2a10 10 0 0 1 10 10h-10z"/>
+                    </svg>
+                    Smart Farming Technologies
+                </h2>
+                <ul>
+                    <li><strong>Soil Sensors:</strong> Monitor soil moisture, nutrients, and pH levels in real-time</li>
+                    <li><strong>Drones:</strong> Aerial spraying, crop monitoring, and field analysis</li>
+                    <li><strong>Drip Irrigation Systems:</strong> Water-efficient irrigation for optimal crop growth</li>
+                    <li><strong>Livestock Monitoring:</strong> Health tracking devices for cattle, poultry, and fish</li>
+                    <li><strong>Greenhouse Automation:</strong> Climate control and monitoring systems</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                    </svg>
+                    Digital Capacity Building
+                </h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <h4>Agritech Workshops</h4>
+                        <p>Hands-on training in modern agricultural technologies</p>
+                    </div>
+                    <div class="value-card">
+                        <h4>Demonstration Farms</h4>
+                        <p>See technology in action at our model farms</p>
+                    </div>
+                    <div class="value-card">
+                        <h4>Tech Partnerships</h4>
+                        <p>Collaborations with technology companies and startups</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m8 3 4 8 5-5 5 15H2L8 3z"/>
+                    </svg>
+                    Innovation Hubs
+                </h2>
+                <ul>
+                    <li><strong>Youth Agritech Competitions:</strong> Showcase innovative solutions and win support</li>
+                    <li><strong>Incubation Programs:</strong> Nurture agricultural startups and entrepreneurship</li>
+                    <li><strong>Prototyping Labs:</strong> Test and refine agricultural innovations</li>
+                    <li><strong>Field Testing:</strong> Real-world validation of new technologies</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="section content-section">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="subtitle">Our Impact</div>
+                <h1>Achievements</h1>
+                <p>Celebrating milestones in our journey toward sustainable agriculture</p>
+            </div>
+
+            <!-- Partnership with Hapitech -->
+            <div class="hapitech-collab">
+                <h2>
+                    <svg style="display: inline; width: 28px; height: 28px; vertical-align: middle; margin-right: 8px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <line x1="23" y1="21" x2="23" y2="13"/>
+                        <line x1="19" y1="17" x2="23" y2="17"/>
+                    </svg>
+                    Strategic Partnership with Hapitech
+                </h2>
+                <p>
+                    Our collaboration with <strong>Hapitech</strong>, a leading agricultural technology provider, 
+                    has revolutionized how SAYA members access and implement modern farming solutions. Together, 
+                    we're bridging the gap between innovation and practical application in Zambian agriculture.
+                </p>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Farmers Trained</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Technology Workshops</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">40%</div>
+                        <div class="stat-label">Yield Increase</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Districts Reached</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Achievements -->
+            <div class="card">
+                <h2>
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+                        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+                        <path d="M4 22h16"/>
+                        <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+                        <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+                        <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+                    </svg>
+                    Major Accomplishments with Hapitech
+                </h2>
+
+                <div class="achievement-card">
+                    <div class="achievement-header">
+                        <div class="achievement-number">1</div>
+                        <h3>Smart Irrigation Deployment</h3>
+                    </div>
+                    <p>Installed 120+ drip irrigation systems across member farms, reducing water usage by 60% while increasing crop yields by 35%.</p>
+                    <span class="partner-badge">🤝 Powered by Hapitech</span>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-header">
+                        <div class="achievement-number">2</div>
+                        <h3>Mobile Tech Training Program</h3>
+                    </div>
+                    <p>Launched a comprehensive digital literacy initiative, training 500+ farmers to use Hapitech's mobile app for weather forecasts, market prices, and agronomic advice.</p>
+                    <span class="partner-badge">🤝 Powered by Hapitech</span>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-header">
+                        <div class="achievement-number">3</div>
+                        <h3>Soil Testing & Analysis Campaign</h3>
+                    </div>
+                    <p>Conducted soil health assessments for 300+ farms using Hapitech's portable soil sensors, enabling precision fertilizer application and improved soil management.</p>
+                    <span class="partner-badge">🤝 Powered by Hapitech</span>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-header">
+                        <div class="achievement-number">4</div>
+                        <h3>Youth Agritech Innovation Hub</h3>
+                    </div>
+                    <p>Established a tech innovation center in partnership with Hapitech, providing young farmers with access to drones, sensors, and digital tools for modern farming.</p>
+                    <span class="partner-badge">🤝 Powered by Hapitech</span>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-header">
+                        <div class="achievement-number">5</div>
+                        <h3>Market Linkage Platform</h3>
+                    </div>
+                    <p>Co-developed a digital marketplace connecting 250+ SAYA farmers directly with buyers, eliminating middlemen and increasing farmer income by 28%.</p>
+                    <span class="partner-badge">🤝 Powered by Hapitech</span>
+                </div>
+            </div>
+
+            <!-- Impact Areas -->
+            <div class="card">
+                <h2>
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2v20M2 12h20"/>
+                    </svg>
+                    Areas of Impact
+                </h2>
+                <div class="impact-grid">
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                        </div>
+                        <h4>Knowledge Transfer</h4>
+                        <p>Over 750 farmers trained in modern agritech solutions and sustainable practices</p>
+                    </div>
+
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="1" x2="12" y2="23"/>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                            </svg>
+                        </div>
+                        <h4>Economic Growth</h4>
+                        <p>Generated K2.5M+ in additional income for member farmers through improved yields</p>
+                    </div>
+
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 20h10"/>
+                                <path d="M10 20c5.5-2.5.8-6.4 3-10"/>
+                                <path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/>
+                            </svg>
+                        </div>
+                        <h4>Environmental Impact</h4>
+                        <p>Reduced water consumption by 45% and chemical fertilizer use by 30% across partner farms</p>
+                    </div>
+
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </div>
+                        <h4>Youth Engagement</h4>
+                        <p>Attracted 200+ young people to agriculture through tech-enabled farming opportunities</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="card">
+                <h2>
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    Partnership Timeline
+                </h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">Q1 2024</div>
+                        <div class="timeline-content">
+                            <strong>Partnership Launch</strong><br>
+                            Signed strategic partnership agreement with Hapitech, establishing framework for technology transfer and capacity building
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">Q2 2024</div>
+                        <div class="timeline-content">
+                            <strong>Pilot Program</strong><br>
+                            Deployed first 30 smart irrigation systems and conducted initial training workshops in Lusaka and Copperbelt provinces
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">Q3 2024</div>
+                        <div class="timeline-content">
+                            <strong>Scale-Up Phase</strong><br>
+                            Expanded to 8 districts, trained 500+ farmers, and launched the digital marketplace platform
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">Q4 2024</div>
+                        <div class="timeline-content">
+                            <strong>Innovation Hub Opening</strong><br>
+                            Officially opened the Youth Agritech Innovation Hub with state-of-the-art facilities and equipment
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">2025 Goals</div>
+                        <div class="timeline-content">
+                            <strong>Expansion Plans</strong><br>
+                            Target: 1,500 farmers trained, 15 districts covered, and launch of SAYA-Hapitech mobile app
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="card" style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); text-align: center; border: 2px solid #16a34a;">
+                <h2 style="color: #15803d;">Join Our Success Story</h2>
+                <p style="max-width: 600px; margin: 16px auto 32px; color: #166534;">
+                    Become part of SAYA's transformative journey and access cutting-edge agricultural technologies 
+                    through our partnership with Hapitech.
+                </p>
+                <button class="btn btn-primary" onclick="navigateTo('membership')" style="margin: 0 auto;">
+                    Become a Member
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14"/>
+                        <path d="m12 5 7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <h3 style="margin-bottom: 16px; color: white;">Sustainable Agriculture Youth Alliance</h3>
+        <p>"Growing Leaders. Growing Food. Growing the Future."</p>
+        <p style="margin-top: 24px; color: #86efac;">Together, we are building a sustainable agricultural ecosystem for current and future generations.</p>
+        <p style="margin-top: 32px; font-size: 0.9rem; opacity: 0.8;">© 2024 SAYA. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Navigation functionality
+        let lastScrollTop = 0;
+        const navbar = document.querySelector('.navbar');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.section');
+
+        // Add click event to all nav links
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                const sectionId = link.getAttribute('data-section');
+                navigateTo(sectionId);
+                
+                // Close mobile menu if open
+                document.getElementById('navMenu').classList.remove('active');
+            });
+        });
+
+        function navigateTo(sectionId) {
+            // Hide all sections
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show selected section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                
+                // Update active nav link
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-section') === sectionId) {
+                        link.classList.add('active');
+                    }
+                });
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Hide/show navbar on scroll
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                // Scrolling down
+                navbar.classList.add('hidden');
+            } else {
+                // Scrolling up
+                navbar.classList.remove('hidden');
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const navMenu = document.getElementById('navMenu');
+            const mobileBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (!navMenu.contains(e.target) && !mobileBtn.contains(e.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Add smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
